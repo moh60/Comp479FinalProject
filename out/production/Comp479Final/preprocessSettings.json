@@ -1,0 +1,7 @@
+{
+  "no_numbers": true,
+  "case_folding": true,
+  "stop_words_150": true,
+  "special_chars": true,
+  "stemming": false
+}
