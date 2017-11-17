@@ -101,7 +101,7 @@ public class CollectionParser {
         // Serialize and save list
         FileOutputStream fout;
         try {
-            fout = new FileOutputStream(Paths.get(tokenStreamPath.toString(), "token_stream.txt").toString());
+            fout = new FileOutputStream(Paths.get(tokenStreamPath.toString(), "token_stream.bin").toString());
             ObjectOutputStream oos = new ObjectOutputStream(fout);
             oos.writeObject(tokenStreamList);
         } catch (IOException e) {

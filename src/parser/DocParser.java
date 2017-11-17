@@ -2,7 +2,10 @@ package parser;
 
 import org.jsoup.nodes.Document;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class DocParser {
@@ -47,7 +50,8 @@ public class DocParser {
         ArrayList<String> newTokensList = new ArrayList<>();
 
         // Defines patterns for special chars and digits
-        Pattern removeCharsPatrn = Pattern.compile("[`~\\-!›@#$%^&*()_+[\\\\]\\\\\\\\;,/{}|:\\\"<>?]|^\\.|\\.$");
+        Pattern removeCharsPatrn = Pattern.compile("[`~!›@#$%^&*();»_+[\\\\]\\\\\\\\,/¬{}|:;\"“”…<>?]|^-$|^\\.|\\.+$|.\u200B$|^-");
+        Pattern specialCharsEnforce = Pattern.compile("[^\\w+\\-.‑'‘’À-ÿ\\]\\[]+|^'+$|^-+$");
         Pattern findDigitsPatrn = Pattern.compile("\\d+");
 
         // For each token check settings and preprocess as necessary
@@ -55,7 +59,7 @@ public class DocParser {
 
             if (settings.get("special_chars")) {
                 token = removeCharsPatrn.matcher(token).replaceAll("");
-                if (token.equals("")) {
+                if (token.trim().equals("") || token.trim().length() == 0 || specialCharsEnforce.matcher(token).find()) {
                     continue;
                 }
             }
@@ -76,7 +80,13 @@ public class DocParser {
                 }
             }
 
+            if (token.trim().equals("")) {
+                System.out.println(token);
+                continue;
+            }
+
             newTokensList.add(token);
+
         }
 
         return newTokensList;
