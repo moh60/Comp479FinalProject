@@ -2,7 +2,7 @@ package indexer;
 
 import javafx.util.Pair;
 import org.json.simple.JSONObject;
-
+import parser.extractAfinn;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,7 +16,7 @@ public class InvertedIndexer {
 
     private Path tokenStreamPath;
     private Path invertedIndexPath;
-    private HashMap<String, Long> aFinnScores;
+    private HashMap<String, Integer> aFinnScores;
     private ArrayList<Pair<Integer, String>> tokenStream;
 
     public InvertedIndexer(Path tokenStreamPath, Path invertedIndexPath) {
@@ -52,7 +52,11 @@ public class InvertedIndexer {
     }
 
     public void loadaFinnScores() {
-        //TODO: Call Static method for aFinn Score
+        try {
+            aFinnScores = extractAfinn.unserailizeAffin();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void spimiInvert(int blockSize) {
@@ -103,8 +107,8 @@ public class InvertedIndexer {
                 if (termPair != null) {
                     tmpBlockDict.replace(termPair, postingsList);
                 } else {
-                    // TODO: Store afinn sentiment score
-                    tmpBlockDict.put(new Pair<>(tokenPair.getValue(), 0), postingsList);
+                    tmpBlockDict.put(new Pair<>(tokenPair.getValue(),
+                            aFinnScores.getOrDefault(tokenPair.getValue(), 0)), postingsList);
                 }
 
             }
