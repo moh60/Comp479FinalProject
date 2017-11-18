@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 class SettingParser {
 
-    private static final Path currentPath = Paths.get(System.getProperty("usr.dir"));
+    private static final Path currentPath = Paths.get(System.getProperty("user.dir"));
     private static final Path settingsFilePath = Paths.get(currentPath.toString(), "res", "preprocessSettings.json");
 
     static HashMap<String, Boolean> readSettings() {
