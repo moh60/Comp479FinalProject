@@ -69,7 +69,7 @@ public class DocSentimentScore {
 
     private static void saveDocSentimentScore(TreeMap<Integer,Integer> docSentimentScore) {
         Path currentPath = Paths.get(System.getProperty("user.dir"));
-        Path docSentimentScorePath = Paths.get(currentPath.toString(), "res", "docSentimentScore.txt");
+        Path docSentimentScorePath = Paths.get(currentPath.toString(), "res");
 
         FileOutputStream fout;
         try {
