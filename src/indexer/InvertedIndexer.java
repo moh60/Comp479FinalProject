@@ -59,6 +59,25 @@ public class InvertedIndexer {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public TreeMap<Pair<String, Integer>, TreeMap<Integer, Integer>> loadIndex(){
+        TreeMap<Pair<String, Integer>, TreeMap<Integer, Integer>> returnObj = null;
+        Path objectPath = Paths.get(this.invertedIndexPath.toString(), "inverted_index.bin");
+        File indexFile = new File(objectPath.toString());
+
+        FileInputStream fileInputStream;
+
+        try {
+            fileInputStream = new FileInputStream(indexFile);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            returnObj = (TreeMap<Pair<String, Integer>, TreeMap<Integer, Integer>>)objectInputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return returnObj;
+    }
+
     public void spimiInvert(int blockSize) {
 
         this.cleanBlockDir();
