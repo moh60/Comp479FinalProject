@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class DocParser {
 
-    public static final List<String> STOPWORDSLIST = Arrays.asList("the", "of", "to", "and", "a", "in", "is", "it", "you", "that", "he",
+    private static final List<String> STOPWORDSLIST = Arrays.asList("the", "of", "to", "and", "a", "in", "is", "it", "you", "that", "he",
             "was", "for", "on", "are", "with", "as", "I", "his", "they", "be", "at", "one", "have", "this", "from", "or",
             "had", "by", "hot", "but", "some", "what", "there", "we", "can", "out", "other", "were", "all", "your",
             "when", "up", "use", "word", "how", "said", "an", "each", "she", "which", "do", "their", "time", "if", "will",
@@ -37,7 +37,7 @@ public class DocParser {
 
     }
 
-    private static ArrayList<String> tokenizeText(String unprocessedText) {
+    static ArrayList<String> tokenizeText(String unprocessedText) {
 
         // Split the text on space
         String[] splittedText = unprocessedText.split("\\s+");
@@ -45,7 +45,7 @@ public class DocParser {
 
     }
 
-    private static ArrayList<String> preprocessTokens(ArrayList<String> tokens, HashMap<String, Boolean> settings) {
+    static ArrayList<String> preprocessTokens(ArrayList<String> tokens, HashMap<String, Boolean> settings) {
 
         ArrayList<String> newTokensList = new ArrayList<>();
 
