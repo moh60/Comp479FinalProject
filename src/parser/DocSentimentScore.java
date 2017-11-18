@@ -3,13 +3,13 @@ package parser;
 import javafx.util.Pair;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.TreeMap;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class DocSentimentScore {
 
+    @SuppressWarnings("unchecked")
     public static void unserialiazeTokenStream() throws Exception {
 
         // load afinn map
@@ -58,12 +58,50 @@ public class DocSentimentScore {
             }
         }
         writeDocSentimentScoreToFile(documentSentimentScore);
+        saveDocSentimentScore(documentSentimentScore);
     }
-    public static void writeDocSentimentScoreToFile(TreeMap<Integer,Integer> docSentimentScore) throws IOException {
+    private static void writeDocSentimentScoreToFile(TreeMap<Integer,Integer> docSentimentScore) throws IOException {
         // create a file to store doc sentiment data
         PrintWriter out = new PrintWriter("res\\docSentimentScore.txt");
         out.println(docSentimentScore);
         out.close();
+    }
+
+    private static void saveDocSentimentScore(TreeMap<Integer,Integer> docSentimentScore) {
+        Path currentPath = Paths.get(System.getProperty("user.dir"));
+        Path docSentimentScorePath = Paths.get(currentPath.toString(), "res", "docSentimentScore.txt");
+
+        FileOutputStream fout;
+        try {
+            fout = new FileOutputStream(Paths.get(docSentimentScorePath.toString(), "doc_sentiment.bin").toString(),
+                    false);
+            ObjectOutputStream oos = new ObjectOutputStream(fout);
+            oos.writeObject(docSentimentScore);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @SuppressWarnings("unchecked")
+    public static TreeMap<Integer, Integer> readDocSentimentScore(){
+        Path currentPath = Paths.get(System.getProperty("user.dir"));
+        Path docSentimentScoreBin = Paths.get(currentPath.toString(), "res", "doc_sentiment.bin");
+        TreeMap<Integer, Integer> docSentScore = null;
+
+        File file = new File(docSentimentScoreBin.toString());
+        FileInputStream fileInputStream;
+        try {
+            fileInputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            docSentScore = (TreeMap<Integer, Integer>) objectInputStream.readObject();
+
+            objectInputStream.close();
+            fileInputStream.close();
+        }catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return docSentScore;
     }
 }
 
