@@ -6,6 +6,8 @@ import parser.DocSentimentScore;
 import parser.QueryParser;
 import parser.extractAfinn;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,6 +19,7 @@ public class SearchEngine {
     private static Map<String, Integer> aFinnPair = new HashMap<>();
     private TreeMap<Integer, Integer> docSentimentScore;
     private TreeMap<Pair<String, Integer>, TreeMap<Integer, Integer>> invertedIndex;
+    private TreeMap<Integer, String> docURL;
     private static SearchEngine searchEngine;
     private static int queryScore = 0;
 
@@ -33,6 +36,7 @@ public class SearchEngine {
     private void init() throws IOException {
         loadIndex();
         loadDocuments();
+        loadDocURL();
     }
 
     @SuppressWarnings("unchecked")
@@ -76,7 +80,8 @@ public class SearchEngine {
                 System.out.println("Result:");
 
                 for(Pair<Integer, Integer> result: resultArray) {
-                    System.out.println("Doc id: " + result.getKey() + ", Sentiment score: " + result.getValue());
+                    System.out.println("Doc id: " + result.getKey() + ", URL: " + this.docURL.get(result.getKey())
+                            + ", Sentiment score: " + result.getValue());
 
                 }
 
@@ -84,7 +89,8 @@ public class SearchEngine {
                 System.out.println("Result:");
 
                 for(int j = resultArray.length-1; j >= 0; j--) {
-                    System.out.println("Doc id: " + resultArray[j].getKey() + ", Sentiment score: " + resultArray[j].getValue());
+                    System.out.println("Doc id: " + resultArray[j].getKey() + ", URL: " + this.docURL.get(resultArray[j].getKey())
+                            + ", Sentiment score: " + resultArray[j].getValue());
                 }
             }
         }else {
@@ -164,5 +170,15 @@ public class SearchEngine {
         this.invertedIndex = invertedIndexer.loadIndex();
     }
 
+    private void loadDocURL() throws FileNotFoundException{
+        this.docURL = new TreeMap<>();
+        Scanner scan;
+        scan = new Scanner(new File("linksInfo.json"));
+        while (scan.hasNext()) {
+            String linkIdPairs[] = scan.nextLine().split(":", 2);
+            int id = Integer.parseInt(linkIdPairs[0]);
+            this.docURL.put(id, linkIdPairs[1]);
+        }
+    }
 
 }
