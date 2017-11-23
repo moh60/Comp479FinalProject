@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class driver {
+public class crawlerDriver {
     public static void main(String[] args) throws Exception {
         // crawl
-         Crawler c = new Crawler();
+//         Crawler c = new Crawler();
         // https://csu.qc.ca/content/student-groups-associations
         // https://www.concordia.ca/artsci/students/associations.html
         // http://www.cupfa.org/

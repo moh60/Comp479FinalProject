@@ -3,7 +3,7 @@ package indexer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class TestIndex {
+public class indexDriver {
 
     public static void main (String [] args){
 
