@@ -93,6 +93,10 @@ public class SearchEngine {
         }
     }
 
+    private int getDocumentFrequency(TreeMap<Integer, Integer> postingsList){
+        return postingsList.size();
+    }
+
     private TreeSet<Integer> fetchFromIndex(List<Pair<String, Integer>> queryToken_sentiment_pairs) {
         //Fetch all docIDs for given query.
         if(queryToken_sentiment_pairs != null && this.invertedIndex != null && !this.invertedIndex.isEmpty()){
