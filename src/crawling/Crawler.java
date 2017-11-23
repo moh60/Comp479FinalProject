@@ -12,7 +12,8 @@ import java.util.*;
 
 public class Crawler {
     // crawl links
-    public void crawl(String url) throws Exception {
+    public void crawl(String url, int upperBound) throws Exception {
+        int depth = 0;
         System.out.println("Fetching: " + url);
         // getting sub links
         Document doc = Jsoup.connect(url).get();
@@ -33,19 +34,22 @@ public class Crawler {
         else {
             docID = linkSet.lastKey()+1;
         }
-        // get robot links
-        List<String> robotLinks = getRobots(url);
-        // go through list of link elements
-        for (Element link : links) {
-            String linkAttr = link.attr("abs:href");
-            if (!linkAttr.equals("")) {
-                URL urlObject = new URL(linkAttr);
-                System.out.println(urlObject);
-                if (!linkAttr.contains("mailto:") && linkAttr.contains("http") && !robotLinks.contains(urlObject.getPath())) {
-                    if (!linkSet.containsValue(link.attr("abs:href")) || linkSet.isEmpty()) {
-                        linkSet.put(docID, link.attr("abs:href"));
-                        writeToFile(docID, link);
-                        docID++;
+        // check if we have exceeded upper bound limit
+        if (!(docID > upperBound)) {
+            // get robot links
+            List<String> robotLinks = getRobots(url);
+            // go through list of link elements
+            for (Element link : links) {
+                String linkAttr = link.attr("abs:href");
+                if (!linkAttr.equals("")) {
+                    URL urlObject = new URL(linkAttr);
+                    System.out.println(urlObject);
+                    if (!linkAttr.contains("mailto:") && linkAttr.contains("http") && !robotLinks.contains(urlObject.getPath())) {
+                        if (!linkSet.containsValue(link.attr("abs:href")) || linkSet.isEmpty()) {
+                            linkSet.put(docID, link.attr("abs:href"));
+                            writeToFile(docID, link);
+                            docID++;
+                        }
                     }
                 }
             }
