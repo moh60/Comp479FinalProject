@@ -19,5 +19,11 @@
     </orderEntry>
     <orderEntry type="library" name="boilerpipe-1.2.0" level="project" />
     <orderEntry type="library" name="json-simple-1.1.1" level="project" />
+    <orderEntry type="library" name="jsoup-1.11.1" level="project" />
+    <orderEntry type="library" name="nekohtml-1.9.13" level="project" />
+    <orderEntry type="library" name="websphinx" level="project" />
+    <orderEntry type="library" name="xerces-2.9.0" level="project" />
+    <orderEntry type="library" name="xercesimpl-2.11.0-sources" level="project" />
+    <orderEntry type="library" name="xml-apis-1.4.01" level="project" />
   </component>
 </module>
