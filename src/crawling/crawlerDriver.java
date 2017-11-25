@@ -12,17 +12,17 @@ import java.util.regex.Pattern;
 public class crawlerDriver {
     public static void main(String[] args) throws Exception {
         // crawl
-//         Crawler c = new Crawler();
+         Crawler c = new Crawler();
         // https://csu.qc.ca/content/student-groups-associations
         // https://www.concordia.ca/artsci/students/associations.html
         // http://www.cupfa.org/
         // http://cufa.net/
-//        String url = "https://csu.qc.ca/content/student-groups-associations";
-//        int upperBound = 400;
-//        c.crawl(url, upperBound);
+        String url = "https://csu.qc.ca/content/student-groups-associations";
+        int upperBound = 400;
+        c.crawl(url, upperBound);
 
         // extract html files
-//        Extract links = new Extract();
-//        links.extractLinks();
+        Extract links = new Extract();
+        links.extractLinks();
     }
 }
